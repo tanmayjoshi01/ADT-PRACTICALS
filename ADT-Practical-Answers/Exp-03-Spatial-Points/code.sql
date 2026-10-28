@@ -1,40 +1,56 @@
--- Experiment 3: Spatial data (POINT) - colleges near Ratnagiri
--- Coordinates are approximate; replace with real ones from Google Maps. SRID 4326 uses (latitude longitude) order in MySQL 8.
-DROP DATABASE IF EXISTS SpatialDB;
-CREATE DATABASE SpatialDB;
-USE SpatialDB;
+-- Step 1: Create Database
+CREATE DATABASE AAL;
+USE AAL;
 
-CREATE TABLE College (
-    id       INT PRIMARY KEY,
-    name     VARCHAR(100),
-    location POINT NOT NULL SRID 4326
+-- Step 2: Create College Table
+CREATE TABLE COLLEGE (
+    ID INT PRIMARY KEY,
+    CLGNAME VARCHAR(100),
+    LOCATION POINT NOT NULL
 );
 
-INSERT INTO College VALUES
-(1,'Finolex Academy of Management and Technology', ST_GeomFromText('POINT(17.011680 73.335696)',4326)),
-(2,'Government Polytechnic Ratnagiri',             ST_GeomFromText('POINT(16.983857 73.312632)',4326)),
-(3,'Government College of Engineering Ratnagiri',  ST_GeomFromText('POINT(16.984514 73.312804)',4326)),
-(4,'Gogate Joglekar College',                      ST_GeomFromText('POINT(16.986440 73.299455)',4326)),
-(5,'Sample College (approx. location)',          ST_GeomFromText('POINT(16.620000 73.400000)',4326));
--- NOTE: with SRID 4326 MySQL 8 uses (latitude longitude) axis order.
+-- Step 3: Insert College Locations
+INSERT INTO COLLEGE (ID, CLGNAME, LOCATION) VALUES
+(1, 'FINOLEX ACADEMY OF MANAGEMENT AND TECHNOLOGY',
+ ST_GeomFromText('POINT(73.335696 17.011680)')),
+(2, 'Government Polytechnic Ratnagiri',
+ ST_GeomFromText('POINT(73.312632 16.983857)')),
+(3, 'Government College of Engineering Ratnagiri',
+ ST_GeomFromText('POINT(73.312804 16.984514)')),
+(4, 'Gogate Joglekar College',
+ ST_GeomFromText('POINT(73.299455 16.986440)')),
+(5, 'Sample College',
+ ST_GeomFromText('POINT(73.400000 16.620000)'));
 
--- 1) Display location as text
-SELECT name, ST_AsText(location) AS location_text FROM College;
+-- 1. Display Location as Text
+SELECT CLGNAME, ST_AsText(LOCATION) AS Location_Text
+FROM COLLEGE;
 
--- 2) X and Y coordinates (for SRID 4326: ST_X = latitude, ST_Y = longitude)
-SELECT name, ST_Latitude(location) AS latitude, ST_Longitude(location) AS longitude FROM College;
+-- 2. Find X and Y Coordinates
+SELECT CLGNAME,
+       ST_X(LOCATION) AS X_Coordinate,
+       ST_Y(LOCATION) AS Y_Coordinate
+FROM COLLEGE;
 
--- 3) Distance between two colleges (metres)
-SELECT ST_Distance(a.location, b.location) AS distance_m
-FROM College a, College b WHERE a.id = 2 AND b.id = 1;
+-- 3. Calculate Distance Between Two Colleges (Metres)
+SELECT ST_Distance_Sphere(a.LOCATION, b.LOCATION) AS Distance_Metres
+FROM COLLEGE a
+JOIN COLLEGE b ON a.ID = 1 AND b.ID = 2;
 
--- 4) Colleges near a location (within 5 km of GCE Ratnagiri)
-SELECT c.name, ROUND(ST_Distance(c.location, ref.location)) AS dist_m
-FROM College c, (SELECT location FROM College WHERE id = 3) ref
-WHERE ST_Distance(c.location, ref.location) <= 5000 AND c.id <> 3
-ORDER BY dist_m;
+-- 4. Find Colleges Near a Location (Within 5 KM)
+SELECT CLGNAME,
+       ROUND(ST_Distance_Sphere(
+           LOCATION, POINT(73.312804, 16.984514)
+       )) AS Distance_Metres
+FROM COLLEGE
+WHERE ST_Distance_Sphere(
+    LOCATION, POINT(73.312804, 16.984514)
+) <= 5000
+ORDER BY Distance_Metres;
 
--- 5) Display complete information
-SELECT id, name, ST_AsText(location) AS wkt,
-       ST_Latitude(location) AS latitude, ST_Longitude(location) AS longitude
-FROM College;
+-- 5. Display Complete Information
+SELECT ID, CLGNAME,
+       ST_AsText(LOCATION) AS Location_Text,
+       ST_X(LOCATION) AS X_Coordinate,
+       ST_Y(LOCATION) AS Y_Coordinate
+FROM COLLEGE;
