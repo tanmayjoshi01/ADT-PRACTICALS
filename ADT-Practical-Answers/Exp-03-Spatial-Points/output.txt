@@ -1,0 +1,39 @@
++----------------------------------------------+----------------------------+
+| name                                         | location_text              |
++----------------------------------------------+----------------------------+
+| Finolex Academy of Management and Technology | POINT(17.01168 73.335696)  |
+| Government Polytechnic Ratnagiri             | POINT(16.983857 73.312632) |
+| Government College of Engineering Ratnagiri  | POINT(16.984514 73.312804) |
+| Gogate Joglekar College                      | POINT(16.98644 73.299455)  |
+| Dhamapurkar College Raibag                   | POINT(16.62 73.4)          |
++----------------------------------------------+----------------------------+
++----------------------------------------------+-----------+-----------+
+| name                                         | latitude  | longitude |
++----------------------------------------------+-----------+-----------+
+| Finolex Academy of Management and Technology |  17.01168 | 73.335696 |
+| Government Polytechnic Ratnagiri             | 16.983857 | 73.312632 |
+| Government College of Engineering Ratnagiri  | 16.984514 | 73.312804 |
+| Gogate Joglekar College                      |  16.98644 | 73.299455 |
+| Dhamapurkar College Raibag                   |     16.62 |      73.4 |
++----------------------------------------------+-----------+-----------+
++--------------------+
+| distance_m         |
++--------------------+
+| 3938.6503713887137 |
++--------------------+
++----------------------------------------------+--------+
+| name                                         | dist_m |
++----------------------------------------------+--------+
+| Government Polytechnic Ratnagiri             |     75 |
+| Gogate Joglekar College                      |   1437 |
+| Finolex Academy of Management and Technology |   3871 |
++----------------------------------------------+--------+
++----+----------------------------------------------+----------------------------+-----------+-----------+
+| id | name                                         | wkt                        | latitude  | longitude |
++----+----------------------------------------------+----------------------------+-----------+-----------+
+|  1 | Finolex Academy of Management and Technology | POINT(17.01168 73.335696)  |  17.01168 | 73.335696 |
+|  2 | Government Polytechnic Ratnagiri             | POINT(16.983857 73.312632) | 16.983857 | 73.312632 |
+|  3 | Government College of Engineering Ratnagiri  | POINT(16.984514 73.312804) | 16.984514 | 73.312804 |
+|  4 | Gogate Joglekar College                      | POINT(16.98644 73.299455)  |  16.98644 | 73.299455 |
+|  5 | Dhamapurkar College Raibag                   | POINT(16.62 73.4)          |     16.62 |      73.4 |
++----+----------------------------------------------+----------------------------+-----------+-----------+
